@@ -1228,7 +1228,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ─── BACKEND CALL ────────────────────────────────────────────────────
 async function callChatAPI(message) {
-  const res = await fetch('http://127.0.0.1:8000/chat', {
+  const res = await fetch('/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message })
@@ -1564,7 +1564,7 @@ async function uploadFileEntry(id) {
   try {
     const form = new FormData();
     form.append('file', meta.file);
-    const res = await fetch('http://127.0.0.1:8000/upload', { method: 'POST', body: form });
+    const res = await fetch('/upload', { method: 'POST', body: form });
     if (!res.ok) throw new Error(await res.text() || 'Upload failed');
     if (statusEl) statusEl.textContent = '✓';
     meta.uploaded   = true;
@@ -1580,7 +1580,7 @@ async function removeFileEntry(id) {
   if (!meta) return;
   if (meta.uploaded && meta.serverPath) {
     try {
-      await fetch(`http://127.0.0.1:8000/upload?filename=${encodeURIComponent(meta.file.name)}`, { method: 'DELETE' });
+      await fetch(`/upload?filename=${encodeURIComponent(meta.file.name)}`, { method: 'DELETE' });
     } catch(e) {}
   }
   try { URL.revokeObjectURL(meta.url); } catch(e) {}
