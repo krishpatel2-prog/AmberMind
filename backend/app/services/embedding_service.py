@@ -1,10 +1,9 @@
 from sentence_transformers import SentenceTransformer
 
-from sentence_transformers import SentenceTransformer
-
 model = SentenceTransformer(
     "paraphrase-MiniLM-L3-v2"
 )
+
 
 class EmbeddingService:
 
@@ -13,7 +12,8 @@ class EmbeddingService:
             text: str
     ):
 
-        return self.model.encode(text)
+        return model.encode(text)
+
 
     def generate_embeddings(
             self,
@@ -28,4 +28,4 @@ class EmbeddingService:
                 chunk["content"]
             )
 
-        return self.model.encode(texts)
+        return model.encode(texts)
